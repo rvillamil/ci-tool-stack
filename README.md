@@ -1,10 +1,49 @@
 # ci-tool-stack
 Common 'Dockerized' tools for continuous integration: Jenkins &amp; SonarQube 
 
-## Usage
+# Description
+The stack contains both a "Dockerized" Jenkins and a SonarQube as well as data persistence based in "Docker" volume containers.
+Also, a script is provided for simplificate the "Docker" containers management
 
-To run the stack, do the following:
+The main characteristics are:
+- Jenkins 2.32.3 LTS with pre-configured plugins and one "Docker" volume data container for persistence.
+- SonarQube with postgres database for data persistence. Both "Docker" containers.
+- Maven 2.X and Maven 3.X deployed in jenkins container
+- Java 1.7.X and Java 1.8.X deployed in jenkins container
+- Shell script utility for simplificate "docker" management: Backups and restoring data volumes, can be made easily
+
+## Usage
+To run the stack, open your terminal a run the script and choose one option:
 
     $./tools.sh
     
-Choose option 1, wait...ant your jenkins instance is now available by going to http://localhost:8383 .
+     ======================================
+    	C.I Tool Stack Utilities
+     ======================================
+	
+	(0) Run C.I. tool stack demonized (docker-compose up -d)
+	(1) Stop C.I tool stack (docker-compose stop)
+	(2) Remove all containers (volumes included) and images from C.I tool stack!
+	
+	(3) JENKINS : 'Backup' Jenkins volume data container (JENKINS_HOME and Log file)
+	(4) JENKINS : 'Restore' Jenkins volume data container
+	(5) JENKINS : Run 'bash' terminal
+	(6) JENKINS : Inspect container
+	(7) JENKINS : Update 'plugins.txt' file with current installed plugins
+	(8) JENKINS : Get file '/var/log/jenkins/jenkins.log'
+	(9) JENKINS : Show secret Jenkins instalation key
+	
+	(a) SONAR : 'Backup' Sonarqube volume data container (Postgres ddbb)
+	(b) SONAR : 'Restore' Sonarqube volume data container (Postgres ddbb)
+	
+	(x) Clean all Volumes and Dangling Images
+	(z) SUBVERSION: Create subversion for testing pruposes in http://localhost:3343/csvn/long/auth
+	
+	(q) Quit
+	  --------------------------------
+	Choose one option:
+	
+* Jenkins runs at: http://localhost:8383
+* SonarQube runs at: http://localhost:9000
+
+Edit docker-compose.yml and change the ports
