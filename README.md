@@ -1,7 +1,7 @@
 # ci-tool-stack
 Common 'Dockerized' tools for continuous integration: Jenkins &amp; SonarQube 
 
-# Description
+## Description
 The stack contains both a "Dockerized" Jenkins and a SonarQube as well as data persistence based in "Docker" volume containers.
 Also, a script is provided for simplificate the "Docker" containers management
 
@@ -46,4 +46,7 @@ To run the stack, open your terminal a run the script and choose one option:
 * Jenkins runs at: http://localhost:8383
 * SonarQube runs at: http://localhost:9000
 
-Edit docker-compose.yml and change the ports
+Edit docker-compose.yml and change the ports and other options
+
+## Twitter account
+- Follow me on Twitter, [@rodrigovillamil](https://twitter.com/rodrigovillamil)
