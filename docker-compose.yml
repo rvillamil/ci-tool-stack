@@ -1,0 +1,74 @@
+#
+# docker-compose v1
+#
+# ------------------------------------------------------------------------------
+#                        Data volume container for Jenkins Master
+# ------------------------------------------------------------------------------
+img-jenkins-master-data:
+  build: ./jenkins/jenkins-data
+  container_name: cnt-jenkins-master-data
+
+# ------------------------------------------------------------------------------
+#                             Jenkins Master 
+# ------------------------------------------------------------------------------
+img-jenkins-master:
+  build: ./jenkins/jenkins-master
+  container_name: cnt-jenkins-master
+  ports:
+     # Internal Port:External port
+     - "8383:8080"
+  volumes_from:
+     - img-jenkins-master-data
+  links:
+      # From Jenkins we can 'see' sonar, by 'sonarqube' alias
+     - img-sonarqube:sonarqube
+  environment:
+      - JAVA_OPTS="-Xmx4096m"
+      # Proxy support. Only Docker 1.9
+      - http_proxy="${http_proxy}"
+      - https_proxy="${https_proxy}"
+      
+# ------------------------------------------------------------------------------
+#                         Data volume container for Postgres
+# ------------------------------------------------------------------------------
+img-postgres-data:
+  build: ./postgres/postgresql-data
+  container_name: cnt-postgres-data
+ 
+
+# ------------------------------------------------------------------------------
+#                                  PostGres
+# ------------------------------------------------------------------------------
+img-postgres:
+  build: ./postgres/postgresql
+  container_name: cnt-postgres
+  ports:
+    - "5432:5432"
+  volumes_from:
+    - img-postgres-data
+  environment:
+    - POSTGRES_PASSWORD=sonar
+    - POSTGRES_USER=sonar
+    - PGDATA=/var/lib/postgresql/data/pgdata
+
+    
+# ------------------------------------------------------------------------------
+#                             SonarQube	
+# ------------------------------------------------------------------------------
+img-sonarqube:
+  build: ./sonarqube
+  container_name: cnt-sonarqube
+  # From Sonarqube we can 'see' postgres, by 'postgres-sonar'alias
+  links:
+   - img-postgres:postgres-sonar
+  ports:
+    - "9000:9000"
+    - "9092:9092"
+  environment:   
+    - SONARQUBE_JDBC_USERNAME=sonar
+    - SONARQUBE_JDBC_PASSWORD=sonar
+    - SONARQUBE_JDBC_URL=jdbc:postgresql://postgres-sonar:5432/sonar
+     # Proxy support. Only Docker 1.9
+    - http_proxy="${http_proxy}"
+    - https_proxy="${https_proxy}"
+      
