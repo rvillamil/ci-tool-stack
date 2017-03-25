@@ -5,7 +5,7 @@ Common 'Dockerized' tools for continuous integration: Jenkins &amp; SonarQube
 The stack contains both a "Dockerized" Jenkins and a SonarQube as well as data persistence based in "Docker" volume containers.
 Also, a script is provided for simplificate the "Docker" containers management
 
-The main characteristics are:
+Main characteristics:
 - Jenkins 2.32.3 LTS with pre-configured plugins and one "Docker" volume data container for persistence.
 - SonarQube with postgres database for data persistence. Both "Docker" containers.
 - Maven 2.X and Maven 3.X deployed in jenkins container
