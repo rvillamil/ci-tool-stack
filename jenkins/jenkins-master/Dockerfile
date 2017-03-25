@@ -67,9 +67,6 @@ RUN mkdir /var/log/jenkins &&  \
     mkdir /var/cache/jenkins &&  \
     chown -R jenkins:jenkins /var/log/jenkins &&  \
     chown -R jenkins:jenkins /var/cache/jenkins
-
-USER jenkins
-
 #
 # Set list of plugins to download / update in plugins.txt like this
 # pluginID:version
@@ -82,8 +79,8 @@ USER jenkins
 # install plugins; the plugins.txt file can be exported from Jenkins like this:
 # JENKINS_HOST=username:password@myhost.com:port
 # curl -sSL "http://$JENKINS_HOST/pluginManager/api/xml?depth=1&xpath=/*/*/shortName|/*/*/version&wrapper=plugins" | perl -pe 's/.*?<shortName>([\w-]+).*?<version>([^<]+)()(<\/\w+>)+/\1 \2\n/g'|sed 's/ /:/' > jenkins-master/conf/plugins.txt
-COPY conf/plugins.txt /var/jenkins_home/plugins.txt
-RUN /usr/local/bin/install-plugins.sh /var/jenkins_home/plugins.txt
+COPY conf/plugins.txt /usr/share/jenkins/ref/plugins/
+RUN /usr/local/bin/install-plugins.sh $(cat /usr/share/jenkins/ref/plugins/plugins.txt)
 
 #
 # Adding default Jenkins Jobs
@@ -94,6 +91,8 @@ RUN /usr/local/bin/install-plugins.sh /var/jenkins_home/plugins.txt
 # tell Jenkins that no banner prompt for pipeline plugins is needed
 #
 RUN echo 2.0 > /usr/share/jenkins/ref/jenkins.install.UpgradeWizard.state
+
+USER jenkins
 
 #
 # Set the log file and and move jenkins.war to cache directory, out of the 
