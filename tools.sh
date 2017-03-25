@@ -154,9 +154,22 @@ get_plugins_from_jenkins()
 {
     # install plugins; the plugins.txt file can be exported from Jenkins like this:
     # jenkins_host=username:password@myhost.com:port
-    message "Connecting to Jenkins Host..."
-    admin_pass=$(show_jenkins_initial_admin_password)
-    JENKINS_HOST_CONNECTION_STRING="admin:${admin_pass}@192.168.99.100:8383"
+    #echo "Not yet implemented.."
+    #exit 1
+    #message "Connecting to Jenkins Host..."
+    #echo -e "Jenkins Username:"
+    #read jenkins_username
+    #echo -e "Password:"
+    #read user_password
+    #echo -e "Jenkins HOST (localhost, 192.168.99.199):"
+    #read jenkins_host
+    
+    #jenkins_secret_key="/var/jenkins_home/secrets/initialAdminPassword"
+    #admin_pass=$(docker exec ${JENKINS_MASTER_CONTAINER} cat ${jenkins_secret_key})
+    #echo "admin:$admin_pass"
+    #exit 0
+
+    JENKINS_HOST_CONNECTION_STRING="user:password@192.168.99.100:8383"
     
     message "Getting 'plugins.txt' file from ${JENKINS_HOST_CONNECTION_STRING}"
     
@@ -181,7 +194,7 @@ get_log_file()
 
 show_jenkins_initial_admin_password()
 {
-    Jenkins_secret_key="/var/jenkins_home/secrets/initialAdminPassword"
+    jenkins_secret_key="/var/jenkins_home/secrets/initialAdminPassword"
     message "Jenkins Secret Key from file ${jenkins_secret_key}"
     docker exec ${JENKINS_MASTER_CONTAINER} cat ${jenkins_secret_key}
 }
