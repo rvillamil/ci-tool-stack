@@ -83,7 +83,7 @@ USER jenkins
 # JENKINS_HOST=username:password@myhost.com:port
 # curl -sSL "http://$JENKINS_HOST/pluginManager/api/xml?depth=1&xpath=/*/*/shortName|/*/*/version&wrapper=plugins" | perl -pe 's/.*?<shortName>([\w-]+).*?<version>([^<]+)()(<\/\w+>)+/\1 \2\n/g'|sed 's/ /:/' > jenkins-master/conf/plugins.txt
 COPY conf/plugins.txt /var/jenkins_home/plugins.txt
-RUN /usr/local/bin/plugins.sh /var/jenkins_home/plugins.txt
+RUN /usr/local/bin/install-plugins.sh /var/jenkins_home/plugins.txt
 
 #
 # Adding default Jenkins Jobs
