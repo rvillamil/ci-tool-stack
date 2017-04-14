@@ -25,8 +25,8 @@ img-jenkins-master:
   environment:
       - JAVA_OPTS="-Xmx4096m"
       # Proxy support. Only Docker 1.9
-      - http_proxy="${http_proxy}"
-      - https_proxy="${https_proxy}"
+      # - http_proxy="${http_proxy}"
+      # - https_proxy="${https_proxy}"
       
 # ------------------------------------------------------------------------------
 #                         Data volume container for Postgres
@@ -69,6 +69,6 @@ img-sonarqube:
     - SONARQUBE_JDBC_PASSWORD=sonar
     - SONARQUBE_JDBC_URL=jdbc:postgresql://postgres-sonar:5432/sonar
      # Proxy support. Only Docker 1.9
-    - http_proxy="${http_proxy}"
-    - https_proxy="${https_proxy}"
+     # - http_proxy="${http_proxy}"
+     # - https_proxy="${https_proxy}"
       

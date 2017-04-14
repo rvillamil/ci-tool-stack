@@ -52,7 +52,7 @@ run_all()
     docker-compose -f ${DOCKER_COMPOSE_FILE} up -d
     message "\n- C.I services running in background (-d) !! . You can see the compose file in '${DOCKER_COMPOSE_FILE}'"
     message "- Jenkins at: http://localhost:8383'"
-    message "- SonarQube at: http://localhost:9000'"
+    message "- SonarQube at: http://localhost:9000' (user:admin, password:admin)"
 }
 
 stop_all()
@@ -69,8 +69,6 @@ backup_jenkins_data_container()
 	message "ERROR! The backup file '${backup_file_full_path}' already exists!. Delete it before" 
 	return 1
     fi
-    # Recuperamos los plugins por si acaso..
-    ! get_plugins_from_jenkins && return 1
     # Tiramos los contenedores ...
     stop_all_compose_containers
     docker ps
@@ -131,6 +129,11 @@ bash_jenkins_master()
 {
     bash_in_container ${JENKINS_MASTER_CONTAINER}
 }
+
+bash_sonarqube()
+{
+    bash_in_container ${SONAR_CONTAINER}
+}   
 
 inspect_jenkins_master()
 {
@@ -235,7 +238,8 @@ do
    
 	(a) SONAR : 'Backup' Sonarqube volume data container (Postgres ddbb)
 	(b) SONAR : 'Restore' Sonarqube volume data container (Postgres ddbb)
-    
+	(c) SONAR : Run 'bash' terminal
+
 	(x) Clean all Volumes and Dangling Images
 	(z) SUBVERSION: Create subversion for testing pruposes in http://localhost:3343/csvn/long/auth
      
@@ -260,6 +264,7 @@ EOF
 	
 	"a"|"A")  backup_postgres_data_container ; exit 0 ;;
 	"b"|"B")  restore_postgres_data_container; exit 0 ;;
+	"c"|"C")  bash_sonarqube; exit 0 ;;
 	
 	"x"|"X")  clean_all_dangling_volumes_and_images ;;
 	"z"|"Z")  run_svnserver; exit 0 ;;
