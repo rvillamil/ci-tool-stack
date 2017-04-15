@@ -7,12 +7,19 @@ USER root
 # this is a non-interactive automated build - avoid some warning messages
 ENV DEBIAN_FRONTEND noninteractive
 RUN apt-get update &&  \
-    apt-get install -y wget
+    apt-get install -y wget sudo
+
+
+# Allow jenkins user to run docker as root
+RUN echo "jenkins ALL=(ALL) NOPASSWD: ALL" > /etc/sudoers.d/00jenkins \
+    && chmod 440 /etc/sudoers.d/00jenkins
+
 #
 # Maven and java directories
 #
 RUN mkdir -p /opt/maven && \
     mkdir -p /opt/java
+
 #
 # MAVEN 2
 #
@@ -53,6 +60,14 @@ RUN wget --no-cookies --header "Cookie: oraclelicense=accept-securebackup-cookie
 
 # unpack java
 RUN mkdir -p /opt/java/ && tar -zxf /tmp/$JAVA7_FILENAME -C /opt/java/
+
+#
+# Docker CLIENT support:
+# see: http://jpetazzo.github.io/2015/09/03/do-not-use-docker-in-docker-for-ci/   
+#
+ENV DOCKER_VERSION=1.9.1
+RUN wget -nv https://get.docker.com/builds/Linux/x86_64/docker-$DOCKER_VERSION -O /usr/bin/docker && chmod +x /usr/bin/docker && chmod a+s /usr/bin/docker
+
 
 #
 # Fin de las instalaciones: remove download archive files

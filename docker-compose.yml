@@ -17,6 +17,10 @@ img-jenkins-master:
   ports:
      # Internal Port:External port
      - "8383:8080"
+  volumes:
+     # Docker support
+     # see: http://jpetazzo.github.io/2015/09/03/do-not-use-docker-in-docker-for-ci/
+     - /var/run/docker.sock:/var/run/docker.sock
   volumes_from:
      - img-jenkins-master-data
   links:

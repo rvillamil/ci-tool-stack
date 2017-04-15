@@ -18,7 +18,7 @@ echo -e "WARNING! The log file is ${LOG_FILE}"
 
 log()
 {
-	echo "$(date +'%Y-%m-%d %H:%M:%S,%3N') ${1}" >> ${LOG_FILE} 
+    echo "$(date +'%Y-%m-%d %H:%M:%S,%3N') ${1}" >> ${LOG_FILE} 
 }
 logInfo()
 {
@@ -30,7 +30,7 @@ logError()
 }
 message()
 {
-	echo -e "${1}"
+    echo -e "${1}"
 }
 
 # ----------------------------- Other functions --------------------------------
