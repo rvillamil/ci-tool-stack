@@ -1,2 +1,2 @@
-FROM sonarqube:6.3
+FROM sonarqube:5.6.6
 MAINTAINER Rodrigo Villamil Perez
