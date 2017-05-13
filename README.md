@@ -6,8 +6,8 @@ The stack contains both a "Dockerized" Jenkins and a SonarQube as well as data p
 Also, a script is provided for simplificate the "Docker" containers management
 
 Main characteristics:
-- Jenkins 2.41.6 LTS with pre-configured plugins and one "Docker" volume data container for persistence. 
-- SonarQube 6.3 with postgres database for data persistence. Both "Docker" containers.
+- Jenkins 2.46.X LTS with pre-configured plugins and "Docker" volume data container for JENKIS_HOME.
+- SonarQube 5.6.X with postgres database for data persistence. Both "Docker" containers.
 - Maven 2.0.11 and Maven 3.3.9 deployed in jenkins container
 - Java 1.7.79 and Java 1.8.111 deployed in jenkins container
 - Docker 1.9.1 deployed in jenkins container. it doesn't use docker in docker! Requieres docker host running
